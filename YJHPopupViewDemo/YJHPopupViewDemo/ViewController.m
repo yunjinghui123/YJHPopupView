@@ -25,7 +25,7 @@
     button.frame = CGRectMake(0, 100, 100, 100);
     button.hidden = YES;
     
-    YJHPopupView *popView = [YJHPopupView showToView:[UIApplication sharedApplication].keyWindow subView:button finish:^{
+    YJHPopupView *popView = [YJHPopupView showToView:[UIApplication sharedApplication].windows.firstObject subView:button finish:^{
         button.hidden = NO;
     }];
     popView.backgroundColor = UIColor.cyanColor;
