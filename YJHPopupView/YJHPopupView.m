@@ -8,6 +8,10 @@
 
 #import "YJHPopupView.h"
 
+@interface YJHPopupView () <UIGestureRecognizerDelegate>
+@property (nonatomic, strong) UIView *contentView;
+@end
+
 @implementation YJHPopupView
 
 - (instancetype)init {
@@ -31,7 +35,15 @@
 
 - (void)addBackGroundTapHiddenGesture {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenView)];
+    tap.delegate = self;
     [self addGestureRecognizer:tap];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isDescendantOfView:self.contentView]) {
+        return NO;
+    }
+    return YES;
 }
 
 /// show popupView
@@ -39,8 +51,9 @@
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView finish:(YJHPopShowFinished)showFinish {
     YJHPopupView *popView = [[YJHPopupView alloc] initWithFrame:view.bounds];
     [view addSubview:popView];
-    
     [popView addSubview:subView];
+    
+    popView.contentView = subView;
     
     popView.alpha = 0;
     [UIView animateWithDuration:0.25 animations:^{
