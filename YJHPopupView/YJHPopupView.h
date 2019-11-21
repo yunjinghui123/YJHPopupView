@@ -21,7 +21,9 @@ typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
 
 /**
  添加的subview必须要设置frame，否则子视图不会展示
- The added subview must have a frame set, Otherwise the subview will not show
+ 子视图frame为视图完全展示的frame
+ The added subview must have a frame set, Otherwise the subview will not show.
+ The subview frame is the frame that the view is fully displayed.
  */
 /// show popView, default YJHPopShowViewAnimationEase
 /// view super view
