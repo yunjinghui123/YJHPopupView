@@ -66,7 +66,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 /// show popupView
 /// @param view super view
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView finish:(YJHPopShowFinished)showFinish {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:YJHPopShowViewAnimationFromBottom finish:showFinish];
+    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:YJHPopShowViewAnimationEase finish:showFinish];
 }
 
 + (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
@@ -146,9 +146,9 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     CGFloat contentViewH = self.contentView.frame.size.height;
     self.contentView.frame = CGRectMake(0, contentViewY, self.popView.frame.size.width, contentViewH);
     [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
-        self.popView.alpha = 0.f;
         self.contentView.frame = CGRectMake(0, self.popView.frame.size.height, self.popView.frame.size.width, contentViewH);
     } completion:^(BOOL finished) {
+        self.popView.alpha = 0.f;
         [self hiddenFromView];
     }];
 }
