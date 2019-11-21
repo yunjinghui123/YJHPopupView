@@ -8,7 +8,7 @@
 
 #import "YJHPopupView.h"
 
-/// 动画展示消失时间
+/// animation duration
 static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 @interface YJHPopupView () <UIGestureRecognizerDelegate>
@@ -163,7 +163,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     }];
 }
 
-/// 隐藏视图
+/// hidden view
 - (void)hiddenFromView {
     [self removeFromSuperview];
     [self.contentView removeFromSuperview];
