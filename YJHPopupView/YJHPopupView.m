@@ -37,7 +37,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 }
 
 - (void)setupSubViews {
-    self.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.6];
+    self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.6];
     [self addBackGroundTapHiddenGesture];
 }
 
@@ -167,11 +167,6 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 - (void)hiddenFromView {
     [self removeFromSuperview];
     [self.contentView removeFromSuperview];
-//    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull subView, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if ([subView isKindOfClass:[UIView class]]) {
-//            [subView removeFromSuperview];
-//        }
-//    }];
 }
 
 
