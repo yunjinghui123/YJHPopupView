@@ -12,14 +12,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^YJHPopShowFinished)(void);
 
+typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
+    YJHPopShowViewAnimationEase       = 1 << 0,
+    YJHPopShowViewAnimationFromBottom = 1 << 1
+};
+
 @interface YJHPopupView : UIView
 
 
-/// show popView
-/// @param view super view
-/// @param subView custom view
-/// @param showFinish YJHPopupView showFinish
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView finish:(YJHPopShowFinished)showFinish;
+/// show popView, default YJHPopShowViewAnimationEase
+/// view super view
+/// subView custom view
+/// showFinish YJHPopupView showFinish
++ (instancetype)showToWindowWithSubView:(UIView *)subView;
++ (instancetype)showToWindowWithSubView:(UIView *)subView finish:(nullable YJHPopShowFinished)showFinish;
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView finish:(nullable YJHPopShowFinished)showFinish;
+
+/// you can specify an animated style
++ (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation;
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation finish:(nullable YJHPopShowFinished)showFinish;
 
 /// hidden
 - (void)hiddenView;
