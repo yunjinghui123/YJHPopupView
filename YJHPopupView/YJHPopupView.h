@@ -26,6 +26,10 @@ typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
  The added subview must have a frame set, Otherwise the subview will not show.
  The subview frame is the frame that the view is fully displayed.
  */
+
+/// whether to respond to background gesture. default YES
+@property (nonatomic, assign) BOOL isUseBackTapGesture;
+
 /// show popView, default YJHPopShowViewAnimationEase
 /// view super view
 /// subView custom view

@@ -39,6 +39,7 @@
         });
     }];
     popView.backgroundColor = UIColor.cyanColor;
+    popView.isUseBackTapGesture = NO;
 
 }
 

@@ -18,11 +18,14 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 @property (nonatomic, assign) YJHPopShowViewAnimation animation;
 @end
 
-@implementation YJHPopupView
+@implementation YJHPopupView {
+    UITapGestureRecognizer *_tap;
+}
 
 - (instancetype)init {
     if (self = [super init]) {
         self.animation = YJHPopShowViewAnimationEase;
+        self.isUseBackTapGesture = YES;
         [self setupSubViews];
     }
     return self;
@@ -42,9 +45,9 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 }
 
 - (void)addBackGroundTapHiddenGesture {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenView)];
-    tap.delegate = self;
-    [self addGestureRecognizer:tap];
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenView)];
+    _tap.delegate = self;
+    [self addGestureRecognizer:_tap];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -52,6 +55,13 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         return NO;
     }
     return YES;
+}
+
+- (void)setIsUseBackTapGesture:(BOOL)isUseBackTapGesture {
+    _isUseBackTapGesture = isUseBackTapGesture;
+    if (!isUseBackTapGesture) {
+        [self removeGestureRecognizer:_tap];
+    }
 }
 
 #pragma mark - public: show view
