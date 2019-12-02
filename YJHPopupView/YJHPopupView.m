@@ -8,6 +8,9 @@
 
 #import "YJHPopupView.h"
 
+/// The view must be run in main thread.
+#define YJHMainThreadAssert() NSAssert([NSThread isMainThread], @"YJHPopupView needs to be accessed on the main thread.");
+
 /// animation duration
 static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
@@ -84,6 +87,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 }
 
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation finish:(YJHPopShowFinished)showFinish {
+    YJHMainThreadAssert();
     YJHPopupView *popView = [[self alloc] initWithFrame:view.bounds];
     [view addSubview:popView];
     [popView addSubview:subView];
@@ -175,6 +179,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 /// hidden view
 - (void)hiddenFromView {
+    YJHMainThreadAssert();
     [self removeFromSuperview];
     [self.contentView removeFromSuperview];
 }
