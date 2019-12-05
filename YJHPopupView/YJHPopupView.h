@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^YJHPopShowFinished)(void);
+typedef void (^YJHPopHiddenFinished)(void);
 
 typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
     YJHPopShowViewAnimationEase       = 1 << 0,
@@ -29,6 +30,8 @@ typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
 
 /// whether to respond to background gesture. default YES
 @property (nonatomic, assign) BOOL isUseBackTapGesture;
+/// view hidden finish
+@property (nonatomic, copy) YJHPopHiddenFinished hiddenFinish;
 
 /// show popView, default YJHPopShowViewAnimationEase
 /// view super view

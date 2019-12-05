@@ -39,7 +39,10 @@
         });
     }];
     popView.backgroundColor = UIColor.cyanColor;
-    popView.isUseBackTapGesture = NO;
+//    popView.isUseBackTapGesture = NO;
+    popView.hiddenFinish = ^{
+        NSLog(@"hidden");
+    };
 
 }
 

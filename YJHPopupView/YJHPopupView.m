@@ -182,6 +182,9 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     YJHMainThreadAssert();
     [self removeFromSuperview];
     [self.contentView removeFromSuperview];
+    if (self.hiddenFinish) {
+        self.hiddenFinish();
+    }
 }
 
 
