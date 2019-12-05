@@ -31,19 +31,20 @@ typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
 /// whether to respond to background gesture. default YES
 @property (nonatomic, assign) BOOL isUseBackTapGesture;
 /// view hidden finish
-@property (nonatomic, copy) YJHPopHiddenFinished hiddenFinish;
+@property (nonatomic, copy, nullable) YJHPopHiddenFinished hiddenFinish;
+/// view show finish
+@property (nonatomic, copy, nullable) YJHPopShowFinished   showFinish;
 
 /// show popView, default YJHPopShowViewAnimationEase
 /// view super view
 /// subView custom view
 /// showFinish YJHPopupView showFinish
 + (instancetype)showToWindowWithSubView:(UIView *)subView;
-+ (instancetype)showToWindowWithSubView:(UIView *)subView finish:(nullable YJHPopShowFinished)showFinish;
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView finish:(nullable YJHPopShowFinished)showFinish;
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView;
 
 /// you can specify an animated style
 + (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation;
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation finish:(nullable YJHPopShowFinished)showFinish;
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation;
 
 /// hidden
 - (void)hiddenView;

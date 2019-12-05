@@ -30,14 +30,15 @@
     view.backgroundColor = UIColor.redColor;
     
     
-    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    view1.backgroundColor = UIColor.yellowColor;
+    UIView *yellowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    yellowView.backgroundColor = UIColor.yellowColor;
     
-    YJHPopupView *popView = [YJHPopupView showToWindowWithSubView:view finish:^{
+    YJHPopupView *popView = [YJHPopupView showToWindowWithSubView:view];
+    popView.showFinish = ^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [view addSubview:view1];
+            [view addSubview:yellowView];
         });
-    }];
+    };
     popView.backgroundColor = UIColor.cyanColor;
 //    popView.isUseBackTapGesture = NO;
     popView.hiddenFinish = ^{

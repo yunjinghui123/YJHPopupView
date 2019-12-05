@@ -17,7 +17,6 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 @interface YJHPopupView () <UIGestureRecognizerDelegate>
 @property (nonatomic, weak) UIView *contentView;
 @property (nonatomic, weak) YJHPopupView *popView;
-@property (nonatomic, copy)   YJHPopShowFinished showFinish;
 @property (nonatomic, assign) YJHPopShowViewAnimation animation;
 @end
 
@@ -69,31 +68,25 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 #pragma mark - public: show view
 + (instancetype)showToWindowWithSubView:(UIView *)subView {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView finish:nil];
+    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView];
 }
-
-+ (instancetype)showToWindowWithSubView:(UIView *)subView finish:(YJHPopShowFinished)showFinish {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView finish:showFinish];
-}
-
 /// show popupView
 /// @param view super view
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView finish:(YJHPopShowFinished)showFinish {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:YJHPopShowViewAnimationEase finish:showFinish];
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView {
+    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:YJHPopShowViewAnimationEase];
 }
 
 + (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:animation finish:nil];
+    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:animation];
 }
 
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation finish:(YJHPopShowFinished)showFinish {
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
     YJHMainThreadAssert();
     YJHPopupView *popView = [[self alloc] initWithFrame:view.bounds];
     [view addSubview:popView];
     [popView addSubview:subView];
     
     popView.popView = popView;
-    popView.showFinish = showFinish;
     popView.contentView = subView;
     popView.animation = animation;
     
@@ -131,11 +124,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         self.popView.alpha = 1.f;
         self.contentView.frame = CGRectMake(0, contentViewY, self.popView.frame.size.width, contentViewH);
     } completion:^(BOOL finished) {
-        if (finished) {
-            if (self.showFinish) {
-                self.showFinish();
-            }
-        }
+        [self animationShowFinish:finished];
     }];
 }
 
@@ -145,12 +134,17 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
         self.popView.alpha = 1;
     } completion:^(BOOL finished) {
-        if (finished) {
-            if (self.showFinish) {
-                self.showFinish();
-            }
-        }
+        [self animationShowFinish:finished];
     }];
+}
+
+/// show finish callback
+- (void)animationShowFinish:(BOOL)finished {
+    if (finished) {
+        if (self.showFinish) {
+            self.showFinish();
+        }
+    }
 }
 
 /// bottom hidden animation
