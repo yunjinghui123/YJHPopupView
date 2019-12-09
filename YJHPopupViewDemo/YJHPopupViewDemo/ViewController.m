@@ -70,23 +70,19 @@
 
 
 - (UIView *)backView {
-    if (_backView == nil) {
-        CGFloat height = 150;
-        CGFloat y = [UIScreen mainScreen].bounds.size.height - height;
-        CGFloat x = 0;
-        CGFloat width = [UIScreen mainScreen].bounds.size.width;
-        
-        _backView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-        _backView.backgroundColor = UIColor.redColor;
-    }
+    CGFloat height = 150;
+    CGFloat y = [UIScreen mainScreen].bounds.size.height - height;
+    CGFloat x = 0;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
+    _backView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
+    _backView.backgroundColor = UIColor.redColor;
     return _backView;
 }
 
 - (UIView *)yellowView {
-    if (_yellowView == nil) {
-        _yellowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        _yellowView.backgroundColor = UIColor.yellowColor;
-    }
+    _yellowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    _yellowView.backgroundColor = UIColor.yellowColor;
     return _yellowView;
 }
 

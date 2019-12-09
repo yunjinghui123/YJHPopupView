@@ -30,7 +30,6 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         self.animation = YJHPopShowViewAnimationEase;
         self.isUseBackTapGesture = YES;
         [self setupSubViews];
-        
     }
     return self;
 }
@@ -121,11 +120,10 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 - (void)showFromBottonAnimation {
     self.popView.alpha = 0.f;
     CGFloat contentViewY = self.contentView.frame.origin.y;
-    CGFloat contentViewH = self.contentView.frame.size.height;
-    self.contentView.frame = CGRectMake(0, self.popView.bounds.size.height, self.popView.bounds.size.width, contentViewH);
+    self.contentView.frame = (CGRect){{0, self.popView.bounds.size.height}, self.contentView.bounds.size};
     [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
         self.popView.alpha = 1.f;
-        self.contentView.frame = CGRectMake(0, contentViewY, self.popView.bounds.size.width, contentViewH);
+        self.contentView.frame = (CGRect){{0, contentViewY}, self.contentView.bounds.size};
     } completion:^(BOOL finished) {
         [self animationShowFinish:finished];
     }];
@@ -154,10 +152,9 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 - (void)hiddenFromBottonAnimation {
     self.popView.alpha = 1.f;
     CGFloat contentViewY = self.contentView.frame.origin.y;
-    CGFloat contentViewH = self.contentView.frame.size.height;
-    self.contentView.frame = CGRectMake(0, contentViewY, self.popView.bounds.size.width, contentViewH);
+    self.contentView.frame = (CGRect){{0, contentViewY}, self.contentView.bounds.size};
     [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
-        self.contentView.frame = CGRectMake(0, self.popView.bounds.size.height, self.popView.bounds.size.width, contentViewH);
+        self.contentView.frame = (CGRect){{0, self.popView.bounds.size.height}, self.contentView.bounds.size};
     } completion:^(BOOL finished) {
         self.popView.alpha = 0.f;
         [self hiddenFromView];
