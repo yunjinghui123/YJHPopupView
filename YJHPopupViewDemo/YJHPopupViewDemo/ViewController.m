@@ -21,9 +21,9 @@
     
 }
 - (IBAction)buttonA:(id)sender {
-//    [self testWindow];
+    [self testWindow];
 //    [self testView];
-    [self customView];
+//    [self customView];
 }
 
 - (void)customView {
