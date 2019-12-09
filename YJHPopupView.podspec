@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "YJHPopupView"
-  spec.version      = "0.1.3"
+  spec.version      = "0.1.4"
   spec.summary      = "A simple bottom popup view"
   spec.homepage     = "https://github.com/yunjinghui123/YJHPopupView"
   spec.license      = "MIT"
