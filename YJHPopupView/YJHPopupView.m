@@ -9,7 +9,8 @@
 #import "YJHPopupView.h"
 
 /// The view must be run in main thread.
-#define YJHMainThreadAssert() NSAssert([NSThread isMainThread], @"YJHPopupView needs to be accessed on the main thread.");
+#define YJHMainThreadAssert()    NSAssert([NSThread isMainThread], @"YJHPopupView needs to be accessed on the main thread.");
+#define YJHBackViewAssert(view)  NSAssert(!(CGSizeEqualToSize(view.bounds.size, CGSizeZero)), @"YJHPopView super view can not CGSizeZero");
 
 /// animation duration
 static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
@@ -29,6 +30,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         self.animation = YJHPopShowViewAnimationEase;
         self.isUseBackTapGesture = YES;
         [self setupSubViews];
+        
     }
     return self;
 }
@@ -73,7 +75,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 /// show popupView
 /// @param view super view
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:YJHPopShowViewAnimationEase];
+    return [self showToView:view subView:subView popShowAnimation:YJHPopShowViewAnimationEase];
 }
 
 + (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
@@ -81,7 +83,8 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 }
 
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
-    YJHMainThreadAssert();
+    YJHMainThreadAssert()
+    YJHBackViewAssert(view)
     YJHPopupView *popView = [[self alloc] initWithFrame:view.bounds];
     [view addSubview:popView];
     [popView addSubview:subView];
@@ -119,10 +122,10 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     self.popView.alpha = 0.f;
     CGFloat contentViewY = self.contentView.frame.origin.y;
     CGFloat contentViewH = self.contentView.frame.size.height;
-    self.contentView.frame = CGRectMake(0, self.popView.frame.size.height, self.popView.frame.size.width, contentViewH);
+    self.contentView.frame = CGRectMake(0, self.popView.bounds.size.height, self.popView.bounds.size.width, contentViewH);
     [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
         self.popView.alpha = 1.f;
-        self.contentView.frame = CGRectMake(0, contentViewY, self.popView.frame.size.width, contentViewH);
+        self.contentView.frame = CGRectMake(0, contentViewY, self.popView.bounds.size.width, contentViewH);
     } completion:^(BOOL finished) {
         [self animationShowFinish:finished];
     }];
@@ -152,9 +155,9 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     self.popView.alpha = 1.f;
     CGFloat contentViewY = self.contentView.frame.origin.y;
     CGFloat contentViewH = self.contentView.frame.size.height;
-    self.contentView.frame = CGRectMake(0, contentViewY, self.popView.frame.size.width, contentViewH);
+    self.contentView.frame = CGRectMake(0, contentViewY, self.popView.bounds.size.width, contentViewH);
     [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
-        self.contentView.frame = CGRectMake(0, self.popView.frame.size.height, self.popView.frame.size.width, contentViewH);
+        self.contentView.frame = CGRectMake(0, self.popView.bounds.size.height, self.popView.bounds.size.width, contentViewH);
     } completion:^(BOOL finished) {
         self.popView.alpha = 0.f;
         [self hiddenFromView];
@@ -173,7 +176,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 /// hidden view
 - (void)hiddenFromView {
-    YJHMainThreadAssert();
+    YJHMainThreadAssert()
     [self removeFromSuperview];
     [self.contentView removeFromSuperview];
     if (self.hiddenFinish) {
