@@ -16,8 +16,8 @@
 static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 @interface YJHPopupView () <UIGestureRecognizerDelegate>
-@property (nonatomic, weak) UIView *contentView;
-@property (nonatomic, weak) YJHPopupView *popView;
+@property (nonatomic, weak)   UIView *contentView;
+@property (nonatomic, weak)   YJHPopupView *popView;
 @property (nonatomic, assign) YJHPopShowViewAnimation animation;
 @end
 
@@ -102,6 +102,8 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         [self hiddenEaseView];
     } else if (self.animation == YJHPopShowViewAnimationFromBottom) {
         [self hiddenFromBottonAnimation];
+    } else if (self.animation == YJHPopShowViewAnimationNone) {
+        [self hiddenFromView];
     }
 }
 
@@ -112,6 +114,8 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         [self showEaseAnimation];
     } else if (self.animation == YJHPopShowViewAnimationFromBottom) {
         [self showFromBottonAnimation];
+    } else if (self.animation == YJHPopShowViewAnimationNone) {
+        
     }
 }
 
@@ -121,7 +125,8 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     self.popView.alpha = 0.f;
     CGFloat contentViewY = self.contentView.frame.origin.y;
     self.contentView.frame = (CGRect){{0, self.popView.bounds.size.height}, self.contentView.bounds.size};
-    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
+    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME
+                     animations:^{
         self.popView.alpha = 1.f;
         self.contentView.frame = (CGRect){{0, contentViewY}, self.contentView.bounds.size};
     } completion:^(BOOL finished) {
@@ -131,20 +136,27 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 /// ease show animation
 - (void)showEaseAnimation {
-    self.popView.alpha = 0;
-    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
-        self.popView.alpha = 1;
+    self.popView.alpha = 0.f;
+    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME
+                     animations:^{
+        self.popView.alpha = 1.f;
     } completion:^(BOOL finished) {
+        [self animationShowFinish:finished];
+    }];
+}
+
+///  none animation show
+- (void)showNoneAnimation {
+    [UIView animateWithDuration:0.f animations:^{}
+                     completion:^(BOOL finished) {
         [self animationShowFinish:finished];
     }];
 }
 
 /// show finish callback
 - (void)animationShowFinish:(BOOL)finished {
-    if (finished) {
-        if (self.showFinish) {
-            self.showFinish();
-        }
+    if (finished && self.showFinish) {
+        self.showFinish();
     }
 }
 
@@ -180,6 +192,5 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
         self.hiddenFinish();
     }
 }
-
 
 @end

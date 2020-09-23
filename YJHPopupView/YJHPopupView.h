@@ -14,8 +14,9 @@ typedef void (^YJHPopShowFinished)(void);
 typedef void (^YJHPopHiddenFinished)(void);
 
 typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
-    YJHPopShowViewAnimationEase       = 1 << 0,
-    YJHPopShowViewAnimationFromBottom = 1 << 1
+    YJHPopShowViewAnimationNone       = 1 << 0,
+    YJHPopShowViewAnimationEase       = 1 << 1,
+    YJHPopShowViewAnimationFromBottom = 1 << 2
 };
 
 @interface YJHPopupView : UIView
@@ -37,7 +38,7 @@ typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
 
 /// show popView, default YJHPopShowViewAnimationEase
 /// view super view
-/// subView custom view
+/// subView custom view. you must create a custom view when you call that func, because when view hidden, this subview will be remove from superview
 /// showFinish YJHPopupView showFinish
 + (instancetype)showToWindowWithSubView:(UIView *)subView;
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView;
