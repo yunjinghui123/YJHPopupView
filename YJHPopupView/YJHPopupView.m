@@ -7,28 +7,17 @@
 //
 
 #import "YJHPopupView.h"
-
-/// The view must be run in main thread.
-#define YJHMainThreadAssert()    NSAssert([NSThread isMainThread], @"YJHPopupView needs to be accessed on the main thread.");
-#define YJHBackViewAssert(view)  NSAssert(!(CGSizeEqualToSize(view.bounds.size, CGSizeZero)), @"YJHPopView super view can not CGSizeZero");
-
-/// animation duration
-static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
+#import "YJHPopupAnimation.h"
 
 @interface YJHPopupView () <UIGestureRecognizerDelegate>
-@property (nonatomic, weak)   UIView *contentView;
-@property (nonatomic, weak)   YJHPopupView *popView;
-@property (nonatomic, assign) YJHPopShowViewAnimation animation;
+@property (nonatomic, strong, nonnull) id<YJHPopupCoder> animationCoder;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @end
 
-@implementation YJHPopupView {
-    UITapGestureRecognizer *_tap;
-}
+@implementation YJHPopupView
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.animation = YJHPopShowViewAnimationEase;
-        self.isUseBackTapGesture = YES;
         [self setupSubViews];
     }
     return self;
@@ -36,25 +25,26 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 
 -  (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.animation = YJHPopShowViewAnimationEase;
         [self setupSubViews];
     }
     return self;
 }
 
 - (void)setupSubViews {
+    self.isUseBackTapGesture = YES;
+    self.animationCoder = [[YJHPopupAnimationEase alloc] init];
     self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.6];
     [self addBackGroundTapHiddenGesture];
 }
 
 - (void)addBackGroundTapHiddenGesture {
-    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenView)];
-    _tap.delegate = self;
-    [self addGestureRecognizer:_tap];
+    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenView)];
+    _tapGesture.delegate = self;
+    [self addGestureRecognizer:_tapGesture];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([touch.view isDescendantOfView:self.contentView]) {
+    if ([touch.view isDescendantOfView:self.animationCoder.contentView]) {
         return NO;
     }
     return YES;
@@ -63,7 +53,7 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 - (void)setIsUseBackTapGesture:(BOOL)isUseBackTapGesture {
     _isUseBackTapGesture = isUseBackTapGesture;
     if (!isUseBackTapGesture) {
-        [self removeGestureRecognizer:_tap];
+        [self removeGestureRecognizer:_tapGesture];
     }
 }
 
@@ -74,123 +64,36 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 /// show popupView
 /// @param view super view
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView {
-    return [self showToView:view subView:subView popShowAnimation:YJHPopShowViewAnimationEase];
+    return [self showToView:view subView:subView popShowAnimation:[YJHPopupAnimationEase new]];
 }
 
-+ (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:animation];
++ (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(id<YJHPopupCoder>)animationCoder {
+    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:animationCoder];;
 }
 
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation {
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(id<YJHPopupCoder>)animationCoder {
     YJHMainThreadAssert()
     YJHBackViewAssert(view)
     YJHPopupView *popView = [[self alloc] initWithFrame:view.bounds];
     [view addSubview:popView];
     [popView addSubview:subView];
     
-    popView.popView = popView;
-    popView.contentView = subView;
-    popView.animation = animation;
+    popView.animationCoder = animationCoder;
+    popView.animationCoder.popView = popView;
+    popView.animationCoder.contentView = subView;
     
-    [popView showPopViewAnimation];
+    // animation
+    [popView.animationCoder showPopViewAnimation];
     return popView;
 }
 
 #pragma mark - public: hidden view
 - (void)hiddenView {
-    if (self.animation == YJHPopShowViewAnimationEase) {
-        [self hiddenEaseView];
-    } else if (self.animation == YJHPopShowViewAnimationFromBottom) {
-        [self hiddenFromBottonAnimation];
-    } else if (self.animation == YJHPopShowViewAnimationNone) {
-        [self hiddenFromView];
-    }
+    [self.animationCoder hiddenView];
 }
 
-#pragma mark - private show & hidden
-/// show animation
-- (void)showPopViewAnimation {
-    if (self.animation == YJHPopShowViewAnimationEase) {
-        [self showEaseAnimation];
-    } else if (self.animation == YJHPopShowViewAnimationFromBottom) {
-        [self showFromBottonAnimation];
-    } else if (self.animation == YJHPopShowViewAnimationNone) {
-        
-    }
-}
-
-#pragma mark - private func: show animation & hidden animation
-/// bottom show animation
-- (void)showFromBottonAnimation {
-    self.popView.alpha = 0.f;
-    CGFloat contentViewY = self.contentView.frame.origin.y;
-    self.contentView.frame = (CGRect){{0, self.popView.bounds.size.height}, self.contentView.bounds.size};
-    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME
-                     animations:^{
-        self.popView.alpha = 1.f;
-        self.contentView.frame = (CGRect){{0, contentViewY}, self.contentView.bounds.size};
-    } completion:^(BOOL finished) {
-        [self animationShowFinish:finished];
-    }];
-}
-
-/// ease show animation
-- (void)showEaseAnimation {
-    self.popView.alpha = 0.f;
-    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME
-                     animations:^{
-        self.popView.alpha = 1.f;
-    } completion:^(BOOL finished) {
-        [self animationShowFinish:finished];
-    }];
-}
-
-///  none animation show
-- (void)showNoneAnimation {
-    [UIView animateWithDuration:0.f animations:^{}
-                     completion:^(BOOL finished) {
-        [self animationShowFinish:finished];
-    }];
-}
-
-/// show finish callback
-- (void)animationShowFinish:(BOOL)finished {
-    if (finished && self.showFinish) {
-        self.showFinish();
-    }
-}
-
-/// bottom hidden animation
-- (void)hiddenFromBottonAnimation {
-    self.popView.alpha = 1.f;
-    CGFloat contentViewY = self.contentView.frame.origin.y;
-    self.contentView.frame = (CGRect){{0, contentViewY}, self.contentView.bounds.size};
-    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
-        self.contentView.frame = (CGRect){{0, self.popView.bounds.size.height}, self.contentView.bounds.size};
-    } completion:^(BOOL finished) {
-        self.popView.alpha = 0.f;
-        [self hiddenFromView];
-    }];
-}
-
-/// ease hidden animation
-- (void)hiddenEaseView {
-    self.alpha = 1;
-    [UIView animateWithDuration:YJHPOPUPVIEW_ANIMATION_TIME animations:^{
-        self.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self hiddenFromView];
-    }];
-}
-
-/// hidden view
-- (void)hiddenFromView {
-    YJHMainThreadAssert()
-    [self removeFromSuperview];
-    [self.contentView removeFromSuperview];
-    if (self.hiddenFinish) {
-        self.hiddenFinish();
-    }
+- (void)dealloc {
+    [self removeGestureRecognizer:_tapGesture];
 }
 
 @end

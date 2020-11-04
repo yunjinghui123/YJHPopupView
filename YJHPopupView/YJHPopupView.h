@@ -7,20 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJHPopupCoder.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^YJHPopShowFinished)(void);
 typedef void (^YJHPopHiddenFinished)(void);
 
-typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
-    YJHPopShowViewAnimationNone       = 1 << 0,
-    YJHPopShowViewAnimationEase       = 1 << 1,
-    YJHPopShowViewAnimationFromBottom = 1 << 2
-};
-
 @interface YJHPopupView : UIView
-
 /**
  添加的subview必须要设置frame，否则子视图不会展示
  子视图frame为视图完全展示的frame
@@ -44,8 +38,8 @@ typedef NS_ENUM(NSInteger, YJHPopShowViewAnimation) {
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView;
 
 /// you can specify an animated style
-+ (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation;
-+ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(YJHPopShowViewAnimation)animation;
++ (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(id<YJHPopupCoder>)animationCoder;
++ (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(id<YJHPopupCoder>)animationCoder;
 
 /// hidden
 - (void)hiddenView;
