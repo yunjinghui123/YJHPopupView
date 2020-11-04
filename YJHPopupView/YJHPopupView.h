@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YJHPopupCoder.h"
+#import "YJHPopupAnimation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

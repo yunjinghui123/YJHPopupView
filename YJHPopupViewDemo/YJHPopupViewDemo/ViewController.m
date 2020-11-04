@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "YJHPopupView.h"
 #import "YJHCustomTransform.h"
-#import "YJHPopupAnimation.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) UIView *yellowView;
