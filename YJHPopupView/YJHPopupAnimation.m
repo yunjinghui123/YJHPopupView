@@ -30,9 +30,6 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
     @autoreleasepool {
         [self.popView removeFromSuperview];
         [self.contentView removeFromSuperview];
-        [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj removeFromSuperview];
-        }];
     }
     if (self.popView.hiddenFinish) {
         self.popView.hiddenFinish();

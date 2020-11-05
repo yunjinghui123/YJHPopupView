@@ -22,10 +22,10 @@
     
 }
 - (IBAction)buttonA:(id)sender {
-//    [self testWindow];
+    [self testWindow];
 //    [self testView];
 //    [self customView];
-    [self customShow];
+//    [self customShow];
 }
 
 - (void)customView {
@@ -97,9 +97,9 @@
 
 
 - (UIView *)yellowView {
-//    if (_yellowView != nil) {
-//        return _yellowView;
-//    }
+    if (_yellowView != nil) {
+        return _yellowView;
+    }
     _yellowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     _yellowView.backgroundColor = UIColor.yellowColor;
     return _yellowView;

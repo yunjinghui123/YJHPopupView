@@ -18,9 +18,16 @@ typedef void (^YJHPopHiddenFinished)(void);
 /**
  添加的subview必须要设置frame，否则子视图不会展示
  子视图frame为视图完全展示的frame
+ 注意：
+ 1、如果想在popview展示完成的时候为subview添加子视图，建议使用懒加载方式加载，不然会多次创建。
+ 2、如果不使用懒加载，请在hiddenFinsh中自己手动移除子视图
+ 
  
  The added subview must have a frame set, Otherwise the subview will not show.
  The subview frame is the frame that the view is fully displayed.
+ note:
+   1. If you want to add subviews to the subview when the popview is displayed, it is recommended to use lazy loading, otherwise it will be created multiple times.
+   2. If you do not use lazy loading, please manually remove the subview in hiddenFinsh
  */
 
 /// whether to respond to background gesture. default YES
