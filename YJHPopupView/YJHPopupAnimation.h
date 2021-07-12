@@ -23,5 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YJHPopupAnimationFromBottom : YJHPopupAnimation
 @end
 
+/// Animation for right
+@interface YJHPopupAnimationFromRight : YJHPopupAnimation
+@end
 
 NS_ASSUME_NONNULL_END

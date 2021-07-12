@@ -90,3 +90,32 @@ static const CGFloat YJHPOPUPVIEW_ANIMATION_TIME = 0.25;
 @end
 
 
+/// Animation for right
+@implementation YJHPopupAnimationFromRight
+/// bottom show animation
+- (void)showPopViewAnimation {
+    self.popView.alpha = 0.f;
+    CGFloat contentViewX = self.contentView.frame.origin.x;
+    self.contentView.frame = (CGRect){{self.popView.bounds.size.width, 0}, self.contentView.bounds.size};
+    [UIView animateWithDuration:0.25
+                     animations:^{
+        self.popView.alpha = 1.f;
+        self.contentView.frame = (CGRect){{contentViewX, 0}, self.contentView.bounds.size};
+    } completion:^(BOOL finished) {
+        [self animationShowFinish:finished];
+    }];
+}
+
+- (void)hiddenView {
+    self.popView.alpha = 1.f;
+    CGFloat contentViewX = self.contentView.frame.origin.x;
+    self.contentView.frame = (CGRect){{contentViewX, 0}, self.contentView.bounds.size};
+    [UIView animateWithDuration:0.25 animations:^{
+        self.contentView.frame = (CGRect){{self.popView.bounds.size.width, 0}, self.contentView.bounds.size};
+    } completion:^(BOOL finished) {
+        self.popView.alpha = 0.f;
+        [self hiddenFromViewFinish];
+    }];
+}
+
+@end
