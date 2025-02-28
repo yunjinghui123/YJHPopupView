@@ -17,6 +17,7 @@
 		1CBEAA91235EDBDD0092A17D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CBEAA8F235EDBDD0092A17D /* LaunchScreen.storyboard */; };
 		1CBEAA94235EDBDD0092A17D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBEAA93235EDBDD0092A17D /* main.m */; };
 		1CBEAA9D235EDC3F0092A17D /* YJHPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBEAA9C235EDC3F0092A17D /* YJHPopupView.m */; };
+		1CCE51CF2D71E27F00AD3CCF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE51CD2D71E27F00AD3CCF /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		1CBEAA93235EDBDD0092A17D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1CBEAA9B235EDC3F0092A17D /* YJHPopupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJHPopupView.h; sourceTree = "<group>"; };
 		1CBEAA9C235EDC3F0092A17D /* YJHPopupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YJHPopupView.m; sourceTree = "<group>"; };
+		1CCE51CD2D71E27F00AD3CCF /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		1CBEAA9A235EDC2D0092A17D /* YJHPopupView */ = {
 			isa = PBXGroup;
 			children = (
+				1CCE51CE2D71E27F00AD3CCF /* Resources */,
 				1CBEAA9B235EDC3F0092A17D /* YJHPopupView.h */,
 				1CBEAA9C235EDC3F0092A17D /* YJHPopupView.m */,
 				1C7F2FAD2552742000AE897D /* YJHPopupAnimation.h */,
@@ -100,6 +103,14 @@
 			);
 			name = YJHPopupView;
 			path = ../../YJHPopupView;
+			sourceTree = "<group>";
+		};
+		1CCE51CE2D71E27F00AD3CCF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1CCE51CD2D71E27F00AD3CCF /* PrivacyInfo.xcprivacy */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +172,7 @@
 			files = (
 				1CBEAA91235EDBDD0092A17D /* LaunchScreen.storyboard in Resources */,
 				1CBEAA8E235EDBDD0092A17D /* Assets.xcassets in Resources */,
+				1CCE51CF2D71E27F00AD3CCF /* PrivacyInfo.xcprivacy in Resources */,
 				1CBEAA8C235EDBDA0092A17D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
