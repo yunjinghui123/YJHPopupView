@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YJHPopupAnimation.h"
+#import "YJHConstants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

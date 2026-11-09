@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C4EF1CA30A1BD970029738A /* YJHConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EF1C930A1BD970029738A /* YJHConstants.m */; };
 		1C7F2FAF2552742000AE897D /* YJHPopupAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F2FAE2552742000AE897D /* YJHPopupAnimation.m */; };
 		1C7F2FB62552A1B600AE897D /* YJHCustomTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F2FB52552A1B600AE897D /* YJHCustomTransform.m */; };
 		1CBEAA83235EDBDA0092A17D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBEAA82235EDBDA0092A17D /* AppDelegate.m */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C4EF1C830A1BD970029738A /* YJHConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJHConstants.h; sourceTree = "<group>"; };
+		1C4EF1C930A1BD970029738A /* YJHConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YJHConstants.m; sourceTree = "<group>"; };
 		1C7F2FAD2552742000AE897D /* YJHPopupAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJHPopupAnimation.h; sourceTree = "<group>"; };
 		1C7F2FAE2552742000AE897D /* YJHPopupAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YJHPopupAnimation.m; sourceTree = "<group>"; };
 		1C7F2FB22552748400AE897D /* YJHPopupCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJHPopupCoder.h; sourceTree = "<group>"; };
@@ -100,6 +103,8 @@
 				1C7F2FAD2552742000AE897D /* YJHPopupAnimation.h */,
 				1C7F2FAE2552742000AE897D /* YJHPopupAnimation.m */,
 				1C7F2FB22552748400AE897D /* YJHPopupCoder.h */,
+				1C4EF1C830A1BD970029738A /* YJHConstants.h */,
+				1C4EF1C930A1BD970029738A /* YJHConstants.m */,
 			);
 			name = YJHPopupView;
 			path = ../../YJHPopupView;
@@ -185,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C7F2FB62552A1B600AE897D /* YJHCustomTransform.m in Sources */,
+				1C4EF1CA30A1BD970029738A /* YJHConstants.m in Sources */,
 				1CBEAA89235EDBDA0092A17D /* ViewController.m in Sources */,
 				1CBEAA83235EDBDA0092A17D /* AppDelegate.m in Sources */,
 				1CBEAA94235EDBDD0092A17D /* main.m in Sources */,

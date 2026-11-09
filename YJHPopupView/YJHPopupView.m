@@ -7,7 +7,6 @@
 //
 
 #import "YJHPopupView.h"
-#import "YJHPopupAnimation.h"
 
 @interface YJHPopupView () <UIGestureRecognizerDelegate>
 @property (nonatomic, strong, nonnull) id<YJHPopupCoder> animationCoder;
@@ -59,7 +58,7 @@
 
 #pragma mark - public: show view
 + (instancetype)showToWindowWithSubView:(UIView *)subView {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView];
+    return [self showToView:YJHGetRootWindow() subView:subView];
 }
 /// show popupView
 /// @param view super view
@@ -68,7 +67,7 @@
 }
 
 + (instancetype)showToWindowWithSubView:(UIView *)subView popShowAnimation:(id<YJHPopupCoder>)animationCoder {
-    return [self showToView:[UIApplication sharedApplication].windows.firstObject subView:subView popShowAnimation:animationCoder];;
+    return [self showToView:YJHGetRootWindow() subView:subView popShowAnimation:animationCoder];;
 }
 
 + (instancetype)showToView:(UIView *)view subView:(UIView *)subView popShowAnimation:(id<YJHPopupCoder>)animationCoder {
